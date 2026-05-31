@@ -68,6 +68,24 @@ Grounded in a real experiment, not vibes:
   measure with the real tokenizer, never `chars/4`; the fidelity gate proves meaning survived, not
   that tokens dropped.
 
+## Related — just-in-time context, two applications
+
+skill-rag is the **just-in-time context** principle applied to *skills*: stage only what the
+current prompt needs, keep the rest at zero cost. Auto-staging on every prompt is justified **here**
+precisely because it's bounded and self-cleaning — it stages a handful of name+description lines and
+removes the previous turn's, so it can't snowball.
+
+The same principle applied to *knowledge / memory* points the other way: there you **pull**, you
+don't auto-inject. Always-on memory retrieval stuffs whole notes into every turn and degrades the
+agent. [**claude-second-brain**](https://github.com/za3ter123/claude-second-brain) is the companion
+to this repo — the four levels of agent memory (markdown → metadata → embeddings → knowledge graph)
+with retrieval that is pull-only by design.
+
+| | what it stages | trigger | why |
+|---|---|---|---|
+| **skill-rag** (this repo) | skill name+description lines | auto, per prompt | bounded + self-cleaning, so auto is safe |
+| **claude-second-brain** | knowledge notes | you, just-in-time | whole notes bleed context — pull, never push |
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
